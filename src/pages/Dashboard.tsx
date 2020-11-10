@@ -7,6 +7,7 @@ import logo from '../images/Logo.svg';
 interface GithubObject {
     full_name: string;
     description: string;
+    html_url: string;
     owner: { login: string; avatar_url: string };
 }
 
@@ -43,7 +44,12 @@ const Dashboard: React.FC = () => {
             </Form>
             <Repositories>
                 {repositories.map(repository => (
-                    <a key={repository.full_name} href="teste">
+                    <a
+                        target="_blank"
+                        rel="noreferrer"
+                        key={repository.full_name}
+                        href={repository.html_url}
+                    >
                         <img
                             src={repository.owner.avatar_url}
                             alt={repository.owner.login}
