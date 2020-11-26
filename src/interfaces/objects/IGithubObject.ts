@@ -1,4 +1,4 @@
-export default interface GithubObject {
+export default interface IGithubObject {
     full_name: string;
     description: string;
     html_url: string;
