@@ -4,27 +4,12 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import api from '../services/api';
 import logo from '../images/Logo.svg';
 import { Header, RepositoryInfo, Issues } from '../styles/pages/repository';
+import IGithubIssuesObject from '../interfaces/objects/IGithubIssuesObject';
+import IGithubObject from '../interfaces/objects/IGithubObject';
 
-interface GithubObject {
-    full_name: string;
-    description: string;
-    html_url: string;
-    forks: number;
-    stargazers_count: number;
-    open_issues: number;
-    owner: { login: string; avatar_url: string };
-}
-interface GithubIssuesObject {
-    id: number;
-    title: string;
-    html_url: string;
-    user: {
-        login: string;
-    };
-}
 const Repository: React.FC = () => {
-    const [repository, setRepository] = useState<GithubObject | null>(null);
-    const [issues, setIssues] = useState<GithubIssuesObject[]>([]);
+    const [repository, setRepository] = useState<IGithubObject | null>(null);
+    const [issues, setIssues] = useState<IGithubIssuesObject[]>([]);
     const { params } = useRouteMatch<{ repository: string }>();
     useEffect(() => {
         api.get(`repos/${params.repository}`).then(response => {

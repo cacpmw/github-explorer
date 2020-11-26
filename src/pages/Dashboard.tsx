@@ -4,26 +4,20 @@ import { FiChevronRight } from 'react-icons/fi';
 import api from '../services/api';
 import { Title, Form, Repositories, Error } from '../styles/pages/dashboard';
 import logo from '../images/Logo.svg';
-
-interface GithubObject {
-    full_name: string;
-    description: string;
-    html_url: string;
-    owner: { login: string; avatar_url: string };
-}
+import IGithubObject from '../interfaces/objects/IGithubObject';
 
 const Dashboard: React.FC = () => {
     const [newRepository, setNewRepository] = useState('');
     const [inputError, setInputError] = useState('');
-    const [repositories, setRepositories] = useState<GithubObject[]>(
-        (): GithubObject[] => {
+    const [repositories, setRepositories] = useState<IGithubObject[]>(
+        (): IGithubObject[] => {
             const storedRepositories = localStorage.getItem(
                 '@githubExplorer:repositories',
             );
             if (storedRepositories) {
-                return JSON.parse(storedRepositories) as GithubObject[];
+                return JSON.parse(storedRepositories) as IGithubObject[];
             }
-            return [] as GithubObject[];
+            return [] as IGithubObject[];
         },
     );
 
@@ -42,7 +36,7 @@ const Dashboard: React.FC = () => {
             setInputError('Enter the name of the repository');
             return;
         }
-        api.get<GithubObject>(`repos/${newRepository}`)
+        api.get<IGithubObject>(`repos/${newRepository}`)
             .then(response => {
                 const repository = response.data;
                 setRepositories([...repositories, repository]);
